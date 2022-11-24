@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#This script relies on the gziptabix.sh script for greating bgzip'd VCF's and making an index for them
+#Call this script in the root directory of the subset of directories for which you would like to bgzip and index VCFs 
+
+for f in $(find . -name '*.vcf' -or -name '*.vcf.gz'); 
+do 
+    gziptabix.sh $f; 
+done
