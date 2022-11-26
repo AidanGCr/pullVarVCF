@@ -5,7 +5,7 @@
 
 #Options passable are: 
 #   - s (for SV) *or* -m (for MUGQIC)  
-#Both options take three arguments bound by commas (i.e. XXX,XXX,TEST,PATH). Arguments passed must be: 
+#Both options take four arguments bound by commas (i.e. XXX,XXX,TEST,PATH). Arguments passed must be: 
 #   start coordinate (int)
 #   end coordinmate (int)
 #   user supplied identifier for the output directory (for example the gene name for the region of interest) (string)
@@ -38,17 +38,17 @@ while getopts 'cs:m:h' opt; do
       ;;
 
     h)
-      echo "Usage: $(basename $0) [-c] ([-s INT,INT,STRING] or [-m INT,INT,STRING])"
+      echo "Usage: $(basename $0) [-c] ([-s INT,INT,STRING,STRING] or [-m INT,INT,STRING,STRING])"
       exit 0
       ;;
 
     :)
-      echo -e "option requires an argument.\nUsage: $(basename $0) [-c] ([-s INT,INT,STRING] or [-m INT,INT,STRING])"
+      echo -e "option requires an argument.\nUsage: $(basename $0) [-c] ([-s INT,INT,STRING,STRING] or [-m INT,INT,STRING,STRING])"
       exit 1
       ;;
 
     ?)
-      echo -e "Invalid command option.\nUsage: $(basename $0) [-c] ([-s INT,INT,STRING] or [-m INT,INT,STRING])"
+      echo -e "Invalid command option.\nUsage: $(basename $0) [-c] ([-s INT,INT,STRING,STRING] or [-m INT,INT,STRING,STRING])"
       exit 1
       ;;
   esac

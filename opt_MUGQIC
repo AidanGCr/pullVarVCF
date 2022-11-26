@@ -1,3 +1,4 @@
 #!/bin/bash
 
-echo "MUGQIC analysis started. Arguments are: Start - ${array[0]}, End - ${array[1]}, ID - ${array[2]}, Path - ${array[3]}"
+echo "MUGQIC analysis started. Arguments are: Start - $1, End - $2, ID - $3, Path - $4"
+

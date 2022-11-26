@@ -1,3 +1,10 @@
 #!/bin/bash
 
-echo "SV analysis started. Arguments are: Start - ${array[0]}, End - ${array[1]}, ID - ${array[2]}, Path - ${array[3]}"
+#This is the main processing script of the SV analysis output
+#See pullVarVCF for details on the passed arguments 
+
+echo "SV analysis started. Arguments are: Start - $1, End - $2, ID - $3, Path - $4"
+
+#Ensure all VCF files are compressed and indexed
+./trav_bgzt $4 
+
