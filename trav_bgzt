@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #This script relies on the gziptabix.sh script for greating bgzip'd VCF's and making an index for them
-#Call this script in the root directory of the subset of directories for which you would like to bgzip and index VCFs 
+#Pass to this script the root directory of the subset of directories for which you would like to bgzip and index VCFs 
 #For use with Compute Canada cluster's, tabix must be loaded 
 
-for f in $(find . -name '*.vcf' -or -name '*.vcf.gz'); 
+for f in $(find $1 -name '*.vcf' -or -name '*.vcf.gz'); 
 do 
     gziptabix.sh $f; 
 done

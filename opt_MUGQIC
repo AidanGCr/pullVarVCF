@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo "opt_MUGQIC called with paramaters $1 $2 $3"
+echo "MUGQIC analysis started. Arguments are: Start - ${array[0]}, End - ${array[1]}, ID - ${array[2]}, Path - ${array[3]}"

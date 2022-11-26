@@ -5,10 +5,11 @@
 
 #Options passable are: 
 #   - s (for SV) *or* -m (for MUGQIC)  
-#Both options take three arguments bound by commas (i.e. XXX,XXX,TEST). Arguments passed must be: 
+#Both options take three arguments bound by commas (i.e. XXX,XXX,TEST,PATH). Arguments passed must be: 
 #   start coordinate (int)
 #   end coordinmate (int)
 #   user supplied identifier for the output directory (for example the gene name for the region of interest) (string)
+#   path to the directory containing all data (i.e. a "root" directory under which all data files exist, files or further directories)
 #Add -c *first* for use in Compute Canda clusters (this will load the necessary modules)
 
 while getopts 'cs:m:h' opt; do
@@ -24,8 +25,7 @@ while getopts 'cs:m:h' opt; do
       set -f
       IFS=,
       array=($OPTARG)
-      echo "Arguments are: Start - ${array[0]}, End - ${array[1]}, ID - ${array[2]}"
-      ./opt_SV ${array[0]} ${array[1]} ${array[2]}
+      ./opt_SV ${array[0]} ${array[1]} ${array[2]} ${array[3]} 
       ;;
 
     m)
@@ -34,8 +34,7 @@ while getopts 'cs:m:h' opt; do
       set -f
       IFS=,
       array=($OPTARG)
-      echo "Arguments are: Start - ${array[0]}, End - ${array[1]}, ID - ${array[2]}"
-      ./opt_MUGQIC ${array[0]} ${array[1]} ${array[2]}
+      ./opt_MUGQIC ${array[0]} ${array[1]} ${array[2]} ${array[3]}
       ;;
 
     h)
