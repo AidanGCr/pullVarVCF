@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "opt_MUGQIC called with paramaters $1 $2 $3"

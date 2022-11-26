@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#loading modules for Compute Canada's HPC clusters
+
+module load bcftools
+moduel load tabix
+

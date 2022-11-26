@@ -3,6 +3,7 @@
 #This script will creat bgzip'd VCF files from the passed argument and will create an index file for them
 #Base VCF's will still be available since -c is used on bgzip
 #VCF's already bgzip'd will be re-bgzip'd since -f is used. The same can be said of any tabix files. 
+#For use with Compute Canada cluster's, tabix must be loaded 
 
 file=$1
 bgzip -f -c $file > "$file.gz" 
