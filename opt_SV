@@ -20,8 +20,10 @@ do
 done
 
 #Count the number of variants per output file
-printf "Analysis complete\nShowing counts per file.\n"
+echo "" > $5/pullVarVCF_output_$4/totals_per_file.$4 
 for f in $(ls "$5/pullVarVCF_output_$4"); 
 do 
-    wc -l $f 
-done 
+    wc -l $5/pullVarVCF_output_$4/$f >> $5/pullVarVCF_output_$4/totals_per_file.$4 
+done
+
+printf "Analysis complete\n"
