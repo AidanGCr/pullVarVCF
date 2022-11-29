@@ -7,4 +7,4 @@
 
 file=$1
 bgzip -f -c $file > "$file.gz" 
-tabix -f -p vcf $file
+tabix -f -p vcf "$file.gz"

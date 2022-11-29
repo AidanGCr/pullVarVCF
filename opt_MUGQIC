@@ -1,4 +1,4 @@
 #!/bin/bash
 
-echo "MUGQIC analysis started. Arguments are: Start - $1, End - $2, ID - $3, Path - $4"
+echo "MUGQIC analysis started. Arguments are: Chr - $1, Start - $2, End - $3, ID - $4, Path - $5"
 

@@ -3,8 +3,16 @@
 #This is the main processing script of the SV analysis output
 #See pullVarVCF for details on the passed arguments 
 
-echo "SV analysis started. Arguments are: Start - $1, End - $2, ID - $3, Path - $4"
+echo "SV analysis started. Arguments are: Chr - $1, Start - $2, End - $3, ID - $4, Path - $5"
 
 #Ensure all VCF files are compressed and indexed
 ./trav_bgzt $4 
 
+#Construct a portion of the bcftools command
+command="((POS>=$2 & POS<=$3) | (INFO/END>=$2 & INFO/END<=$3)) & CHROM=\"chr$1\""
+
+for f in $(find $1 -name '*.vcf.gz' -or -name '*.vcf.gz.gz'); 
+do 
+
+    bcftools -query -i $command -f '%CHROM\t%POS\t%REF\t%ALT\n' $f > $f.pullvarvcf
+done
