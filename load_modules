@@ -2,6 +2,7 @@
 
 #loading modules for Compute Canada's HPC clusters
 
+printf "***** Loading modules *****"
 module load bcftools
 moduel load tabix
-
+printf "***** Loading finished *****"

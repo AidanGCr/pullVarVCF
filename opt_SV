@@ -6,13 +6,22 @@
 echo "SV analysis started. Arguments are: Chr - $1, Start - $2, End - $3, ID - $4, Path - $5"
 
 #Ensure all VCF files are compressed and indexed
-./trav_bgzt $4 
+./trav_bgzt $5
 
-#Construct a portion of the bcftools command
-command="((POS>=$2 & POS<=$3) | (INFO/END>=$2 & INFO/END<=$3)) & CHROM=\"chr$1\""
+#Make the output directory
+mkdir $5/pullVarVCF_output_$4
 
-for f in $(find $1 -name '*.vcf.gz' -or -name '*.vcf.gz.gz'); 
+#Loop through files and run bcftools
+for f in $(find $5 -name '*metasv.snpeff.vcf.gz' -or -name '*.vcf.gz.gz'); 
 do 
-
-    bcftools -query -i $command -f '%CHROM\t%POS\t%REF\t%ALT\n' $f > $f.pullvarvcf
+    file=$(basename $f)
+    echo "Analyzing $file" 
+    bcftools query -i '((POS>='$2' & POS<='$3') | (INFO/END>='$2' & INFO/END<='$3')) & CHROM="chr$1"' -f '%CHROM\t%POS\t%REF\t%ALT\n' $f > "$5/pullVarVCF_output_$4/$file.pullvarvcf.$4"
 done
+
+#Count the number of variants per output file
+printf "Analysis complete\nShowing counts per file.\n"
+for f in $(ls "$5/pullVarVCF_output_$4"); 
+do 
+    wc -l $f 
+done 
