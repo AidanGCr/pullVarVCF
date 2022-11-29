@@ -4,7 +4,7 @@
 #Pass to this script the root directory of the subset of directories for which you would like to bgzip and index VCFs 
 #For use with Compute Canada cluster's, tabix must be loaded 
 
-for f in $(find $1 -name '*.vcf' -or -name '*.vcf.gz'); 
+for f in $(find $1 -name '*.vcf' -or -name '*germline.snpeff.vcf.gz'); 
 do 
     ./gziptabix $f; 
 done
