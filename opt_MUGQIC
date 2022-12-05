@@ -4,6 +4,7 @@ echo "MUGQIC analysis started. Arguments are: Chr - $1, Start - $2, End - $3, ID
 
 #Run the single bcftools command for the large combined VCF file
 echo "" > "$6/MUGQIC.pullvarvcf.$4" 
-bcftools query -i '((POS>='$2' & POS<='$3') | (INFO/END>='$2' & INFO/END<='$3')) & CHROM="chr'$1'" & (FORMAT/GT="1" | FORMAT/GT="2" | FORMAT/GT="1/0" | FORMAT/GT="1/1" | FORMAT/GT="0/1")' -f '[%SAMPLE: GT=%GT\t]\t%CHROM\t%POS\t%INFO/END\t%REF\t%ALT\t%TYPE\n' $5 >> "$6/MUGQIC.pullvarvcf.$4.tsv"
+bcftools query -i '((POS>='$2' & POS<='$3') | (INFO/END>='$2' & INFO/END<='$3')) & CHROM="chr'$1'" & (FORMAT/GT="1" | FORMAT/GT="2" | FORMAT/GT="1/0" | FORMAT/GT="1/1" | FORMAT/GT="0/1")' -f '[%SAMPLE\t%GT\t]\t%CHROM\t%POS\t%INFO/END\t%REF\t%ALT\t%TYPE\n' $5 >> "$6/MUGQIC.pullvarvcf.$4.tsv"
+python3 $(dirname $0)/mugqic_collect_by_sample "$6/MUGQIC.pullvarvcf.$4.tsv" 
 
-echo "Analysis completed"
+echo -e "Analysis complete\n"

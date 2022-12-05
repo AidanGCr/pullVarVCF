@@ -5,4 +5,5 @@
 printf "***** Loading modules *****"
 module load bcftools
 moduel load tabix
+module load python
 printf "***** Loading finished *****"
