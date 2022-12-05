@@ -3,27 +3,27 @@
 #This is the main processing script of the SV analysis output
 #See pullVarVCF for details on the passed arguments 
 
-echo "SV analysis started. Arguments are: Chr - $1, Start - $2, End - $3, ID - $4, Path - $5"
+echo "SV analysis started. Arguments are: Chr - $1, Start - $2, End - $3, ID - $4, INPUT Path - $5, OUTPUT Path - $6"
 
 #Ensure all VCF files are compressed and indexed
 ./trav_bgzt $5
 
 #Make the output directory
-mkdir $5/pullVarVCF_output_$4
+mkdir $6/pullVarVCF_output_$4
 
 #Loop through files and run bcftools
 for f in $(find $5 -name '*metasv.snpeff.vcf.gz' -or -name '*.vcf.gz.gz'); 
 do 
     file=$(basename $f)
     echo "Analyzing $file" 
-    bcftools query -i '((POS>='$2' & POS<='$3') | (INFO/END>='$2' & INFO/END<='$3')) & CHROM="chr'$1'"' -f '%CHROM\t%POS\t%INFO/END\t%REF\t%ALT\n' $f > "$5/pullVarVCF_output_$4/$file.SV.pullvarvcf.$4"
+    bcftools query -i '((POS>='$2' & POS<='$3') | (INFO/END>='$2' & INFO/END<='$3')) & CHROM="chr'$1'"' -f '%CHROM\t%POS\t%INFO/END\t%REF\t%ALT\n' $f > "$6/pullVarVCF_output_$4/$file.SV.pullvarvcf.$4.tsv"
 done
 
 #Count the number of variants per output file
-echo "" > $5/pullVarVCF_output_$4/totals_per_file.$4 
-for f in $(ls "$5/pullVarVCF_output_$4"); 
+echo "" > $6/pullVarVCF_output_$4/totals_per_file.$4 
+for f in $(ls "$6/pullVarVCF_output_$4"); 
 do 
-    wc -l $5/pullVarVCF_output_$4/$f >> $5/pullVarVCF_output_$4/totals_per_file.$4 
+    wc -l $6/pullVarVCF_output_$4/$f >> $6/pullVarVCF_output_$4/totals_per_file.$4 
 done
 
 printf "Analysis complete\n"

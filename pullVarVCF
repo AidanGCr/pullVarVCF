@@ -1,16 +1,17 @@
 #!/bin/bash
 
-#This script acts as a parser for the pullVarVCF scripts 
+#This script acts as a parser for the pullVarVCF scripts and has the most detailed documentation
 #The subsequently called script will use bcftools to filter VCF's created via either the SV or MUGQIC options on the GenPipes DNAseq pipeline from C3G
 
 #Options passable are: 
 #   - s (for SV) *or* -m (for MUGQIC)  
-#Both options take four arguments bound by commas (i.e. 17,43044295,43125364,BRCA1,your/path/here). Arguments passed must be: 
+#Both options take four arguments bound by commas (i.e. 17,43044295,43125364,BRCA1,path/to/data/dir,path/to/output/dir). Arguments passed must be: 
 #   chromosome (int)
 #   start coordinate (int) - as per hg38
 #   end coordinmate (int) - as per hg38
 #   user supplied identifier for the output directory (for example the gene name for the region of interest) (string)
 #   path to the directory containing all data (i.e. a "root" directory under which all data files exist (for -s), or a path to a file containing the data (for -m))
+#   path to where the user would like the output directory
 #Add -c *first* for use in Compute Canda clusters (this will load the necessary modules)
 
 while getopts 'cs:m:h' opt; do
@@ -26,7 +27,7 @@ while getopts 'cs:m:h' opt; do
       set -f
       IFS=,
       array=($OPTARG)
-      ./opt_SV ${array[0]} ${array[1]} ${array[2]} ${array[3]} ${array[4]}
+      $(dirname $0)/opt_SV ${array[0]} ${array[1]} ${array[2]} ${array[3]} ${array[4]} ${array[5]}
       ;;
 
     m)
@@ -35,21 +36,33 @@ while getopts 'cs:m:h' opt; do
       set -f
       IFS=,
       array=($OPTARG)
-      ./opt_MUGQIC ${array[0]} ${array[1]} ${array[2]} ${array[3]} ${array[4]}
+      $(dirname $0)/opt_MUGQIC ${array[0]} ${array[1]} ${array[2]} ${array[3]} ${array[4]} ${array[5]}
       ;;
 
     h)
-      echo "Usage: $(basename $0) [-c] ([-s INT,INT,INT,STRING,STRING] or [-m INT,INT,INT,STRING,STRING])"
+      echo -e "Usage: $(basename $0) [-c] ([-s INT,INT,INT,STRING,STRING,STRING] or [-m INT,INT,INT,STRING,STRING,STRING])\n"
+      echo -e "The called scripts from this parser will use bcftools to filter VCF's created via either the SV or MUGQIC options on the GenPipes DNAseq pipeline from C3G
+
+            Options passable are: 
+               - s (for SV) *or* -m (for MUGQIC)  
+            Both options take four arguments bound by commas (i.e. 17,43044295,43125364,BRCA1,path/to/data/dir,path/to/output/dir). Arguments passed must be: 
+               chromosome (int)
+               start coordinate (int) - as per hg38
+               end coordinmate (int) - as per hg38
+               user supplied identifier for the output directory (for example the gene name for the region of interest) (string)
+               path to the directory containing all data (i.e. a \"root\" directory under which all data files exist (for -s), or a path to a file containing the data (for -m))
+               path to where the user would like the output directory
+            Add -c *first* for use in Compute Canda clusters (this will load the necessary modules)\n"
+
       exit 0
       ;;
-
     :)
-      echo -e "option requires an argument.\nUsage: $(basename $0) [-c] ([-s INT,INT,INT,STRING,STRING] or [-m INT,INT,INT,STRING,STRING])"
+      echo -e "option requires an argument.\nUsage: $(basename $0) [-c] ([-s INT,INT,INT,STRING,STRIN,STRING] or [-m INT,INT,INT,STRING,STRING,STRING])"
       exit 1
       ;;
 
     ?)
-      echo -e "Invalid command option.\nUsage: $(basename $0) [-c] ([-s INT,INT,INT,STRING,STRING] or [-m INT,INT,INT,STRING,STRING])"
+      echo -e "Invalid command option.\nUsage: $(basename $0) [-c] ([-s INT,INT,INT,STRING,STRING,STRING] or [-m INT,INT,INT,STRING,STRING,STRING])"
       exit 1
       ;;
   esac
