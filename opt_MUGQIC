@@ -8,7 +8,7 @@ echo "" > "$6/MUGQIC_output_$4/MUGQIC.pullvarvcf.$4.tsv"
 bcftools query -i '((POS>='$2' & POS<='$3') | (INFO/END>='$2' & INFO/END<='$3')) & CHROM="chr'$1'" & (FORMAT/GT="1" | FORMAT/GT="2" | FORMAT/GT="1/0" | FORMAT/GT="1/1" | FORMAT/GT="0/1")' -f '[%SAMPLE\t%GT\t]\t%CHROM\t%POS\t%INFO/END\t%REF\t%ALT\t%TYPE\n' $5 >> "$6/MUGQIC_output_$4/MUGQIC.pullvarvcf.$4.tsv"
 
 mkdir $6/MUGQIC_output_$4/by_patient
-python3 $(dirname $0)/mugqic_collect_by_sample "$6/MUGQIC_output_$4/MUGQIC.pullvarvcf.$4.tsv" "$6/MUGQIC_output_$4/by_patient"
+python3 $(dirname $0)/mugqic_collect_by_sample.py "$6/MUGQIC_output_$4/MUGQIC.pullvarvcf.$4.tsv" "$6/MUGQIC_output_$4/by_patient"
 
 #Count the number of variants per output file
 echo "" > $6/MUGQIC_output_$4/by_patient/num_vars_by_patient.txt
